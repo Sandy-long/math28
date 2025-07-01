@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>趣味数学 - 经济问题与浓度问题</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 20px;
+        }
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .rule {
+            background-color: #f1f9fe;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        .example {
+            background-color: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border: 1px solid #e0e0e0;
+        }
+        .question {
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 12px 0 5px 0;
+        }
+        .answer {
+            color: #27ae60;
+            margin-left: 20px;
+            padding-left: 10px;
+            border-left: 2px solid #2ecc71;
+        }
+        
+        /* 经济问题动画 */
+        .economics-animation {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin: 20px auto;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .price-tag {
+            width: 80px;
+            height: 40px;
+            background-color: white;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            position: relative;
+            margin: 0 20px;
+            animation: price-bounce 2s infinite;
+        }
+        .profit-bar {
+            width: 80%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .cost-fill {
+            height: 100%;
+            background-color: #e74c3c;
+            width: 60%;
+            position: absolute;
+            left: 0;
+        }
+        .price-fill {
+            height: 100%;
+            background-color: #2ecc71;
+            width: 100%;
+            position: absolute;
+            left: 0;
+        }
+        .profit-fill {
+            height: 100%;
+            background-color: #3498db;
+            width: 40%;
+            position: absolute;
+            left: 60%;
+        }
+        
+        /* 浓度问题动画 */
+        .concentration-animation {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin: 20px auto;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            display: flex;
+            align-items: center;
+        }
+        .vertical-bar {
+            width: 60px;
+            height: 250px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background-color: #1976d2;
+            animation: fill 1.5s ease-out forwards;
+        }
+        .scale-y {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 250px;
+            margin-left: 10px;
+        }
+        .scale-mark {
+            font-size: 12px;
+            color: #333;
+            position: relative;
+            padding-left: 20px;
+        }
+        .scale-mark:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 15px;
+            height: 1px;
+            background-color: #666;
+        }
+        
+        /* 浓度变化动画 */
+        .solution-container {
+            width: 100px;
+            height: 150px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+            margin: 0 10px;
+        }
+        .solute {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #4fc3f7;
+        }
+        
+        /* 动画关键帧 */
+        @keyframes price-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes fill {
+            from { height: 0%; }
+            to { height: 40%; }
+        }
+        @keyframes profit-grow {
+            from { width: 0%; }
+            to { width: 40%; }
+        }
+        @keyframes solute-fill {
+            from { height: 0%; }
+            to { height: 30%; }
+        }
+        
+        .math-formula {
+            font-size: 18px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .static-text {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+		.solution-container {
+    width: 100px;
+    height: 150px;
+    border: 2px solid #333;
+    position: relative;
+    background-color: #e3f2fd;
+    overflow: hidden;
+}
+
+.solute {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #0288d1;
+    height: 0;
+}
+
+@keyframes solute-fill {
+    to {
+        height: 30%;
+    }
+}
+    </style>
+</head>
+<body>
+<h1>趣味数学28</h1>
+
+<div class="section">
+    <h2>经济问题</h2>
+    
+    <h3>1. 基本经济概念</h3>
+    
+    <div class="economics-animation">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <div class="price-tag" style="border-color: #e74c3c;">进价 90元</div>
+                <div style="width: 40px; display: flex; justify-content: center; align-items: center;">
+                    <div style="font-size: 24px;">→</div>
+                </div>
+                <div class="price-tag" style="border-color: #2ecc71;">售价 150元</div>
+            </div>
+            <div class="profit-bar">
+                <div class="cost-fill"></div>
+                <div class="profit-fill" style="animation: profit-grow 2s infinite alternate;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 80%; margin-top: 5px;">
+                <div style="font-size: 12px;">成本</div>
+                <div style="font-size: 12px;">利润 60元</div>
+            </div>
+       
+        </div>
+    </div>
+    
+    <div class="rule">
+        <strong>基本经济规则：</strong>
+        <ul>
+            <li>利润 = 售价 - 进价</li>
+            <li>利润率 = 利润/进价 × 100%</li>
+            <li>售价 = 进价 × (1 + 利润率)</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <div class="question">一个书包的进价是80元，售价是120元，求利润和利润率分别是多少？</div>
+        <div class="answer">40元；50%</div>
+        
+        <div class="question">某商品售价240元，利润率是20%，求这件商品的进价是多少？</div>
+        <div class="answer">200元</div>
+        
+        <div class="question">某商店进了一批篮球，每个进价90元，售价150元。后来进价上涨10%，但售价不变，求新的利润率是多少？</div>
+        <div class="answer">约51.52%</div>
+    </div>
+    
+    <h3>2. 复杂经济问题</h3>
+    
+    <div class="economics-animation">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <div class="price-tag" style="border-color: #e74c3c;">进价 100元</div>
+                <div style="width: 20px; display: flex; justify-content: center; align-items: center;">
+                    <div style="font-size: 16px;">+20%</div>
+                </div>
+                <div class="price-tag" style="border-color: #f39c12;">定价 120元</div>
+                <div style="width: 20px; display: flex; justify-content: center; align-items: center;">
+                    <div style="font-size: 16px;">×0.9</div>
+                </div>
+                <div class="price-tag" style="border-color: #2ecc71;">售价 108元</div>
+            </div>
+            <div class="profit-bar">
+                <div class="cost-fill" style="width: 92.6%;"></div>
+                <div class="profit-fill" style="width: 7.4%; left: 92.6%;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; width: 80%; margin-top: 5px;">
+                <div style="font-size: 12px;">成本</div>
+                <div style="font-size: 12px;">利润 8元</div>
+            </div>
+        </div>
+        <div class="static-text">
+            <div class="math-formula"></div>
+        </div>
+    </div>
+    
+    <div class="rule">
+        <strong>复杂经济规则：</strong>
+        <ul>
+            <li>折扣价 = 定价 × 折扣率</li>
+            <li>复合利润 = 折扣价 - 进价</li>
+            <li>总体盈亏 = 各项盈亏之和</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <div class="question">一件衣服标价180元，实际卖162元，问打了几折？</div>
+        <div class="answer">9折</div>
+        
+        <div class="question">商店卖出两件商品，每件售价均为80元，其中一件赚25%，另一件亏25%，问总体是盈利还是亏损？金额是多少？</div>
+        <div class="answer">亏损10.67元</div>
+        
+        <div class="question">某商品按200元定价可获利25%，如果实际卖240元，求实际利润是多少？</div>
+        <div class="answer">80元</div>
+    </div>
+</div>
+
+<div class="section">
+    <h2>浓度问题</h2>
+    
+    <h3>1. 浓度基本计算</h3>
+    
+    <div class="concentration-animation">
+        <div class="chart-container">
+            <div class="vertical-bar">
+                <div class="progress"></div>
+            </div>
+            <div class="scale-y">
+                <div class="scale-mark">80%</div>
+                <div class="scale-mark">60%</div>
+                <div class="scale-mark">40%</div>
+                <div class="scale-mark">20%</div>
+                <div class="scale-mark">0%</div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+    
+    <div class="rule">
+        <strong>浓度基本规则：</strong>
+        <ul>
+            <li>浓度 = 溶质质量/溶液质量 × 100%</li>
+            <li>溶液质量 = 溶质质量 + 溶剂质量</li>
+            <li>溶质质量 = 溶液质量 × 浓度</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <div class="question">将30克盐溶解在120克水中，求盐水的总质量和浓度是多少？</div>
+        <div class="answer">150g，20%</div>
+        
+        <div class="question">400克盐水的浓度是15%，求盐的质量是多少？</div>
+        <div class="answer">60g</div>
+        
+        <div class="question">现有300克浓度为12%的盐水，蒸发掉100克水后，求新盐水的浓度是多少？</div>
+        <div class="answer">18%</div>
+    </div>
+    
+    <h3>2. 浓度变化问题</h3>
+    
+<div class="concentration-animation">
+    <div style="display: flex; justify-content: center; width: 100%;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="solution-container">
+                <div class="solute" style="animation: solute-fill 1.5s ease-out forwards;"></div>
+            </div>
+            <div style="font-size: 12px; margin-top: 10px;">原浓度 20%</div>
+        </div>
+        <div style="width: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="font-size: 20px;">+</div>
+            <div style="font-size: 12px;">25克糖</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="solution-container">
+                <div class="solute" style="height: 45%; background-color: #0288d1;"></div>
+            </div>
+            <div style="font-size: 12px; margin-top: 10px;">新浓度 36%</div>
+        </div>
+    </div>
+</div>
+    </div>
+    
+    <div class="rule">
+        <strong>浓度变化规则：</strong>
+        <ul>
+            <li>加浓：增加溶质或减少溶剂</li>
+            <li>稀释：增加溶剂</li>
+            <li>混合浓度 = (溶质1+溶质2)/(溶液1+溶液2)</li>
+        </ul>
+    </div>
+    
+    <div class="example">
+        <div class="question">150克糖水中含有30克糖，求糖水的浓度是多少？</div>
+        <div class="answer">20%</div>
+        
+        <div class="question">现有200克浓度为15%的糖水，加入300克水后，新糖水的浓度是多少？</div>
+        <div class="answer">6%</div>
+        
+        <div class="question">将200克浓度为10%的盐水和300克浓度为20%的盐水混合，求混合后的盐水浓度是多少？</div>
+        <div class="answer">16%</div>
+    </div>
+</div>
+</body>
+</html>

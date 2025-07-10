@@ -47,23 +47,56 @@
             margin: 15px 0;
             border-left: 4px solid #3498db;
         }
+        .question {
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 15px 0 5px 0;
+        }
+        .answer-container {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border: 1px solid #d1fae5;
+            border-radius: 8px;
+            padding: 5px 15px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .answer-container:hover {
+            background: linear-gradient(135deg, #dcffe4 0%, #c6f6d5 100%);
+            transform: translateX(5px);
+        }
+        .answer-prompt {
+            color: #10b981;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .answer-prompt:before {
+            content: "✨";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        .answer {
+            color: #0f9d58;
+            margin-left: 20px;
+            padding: 10px 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            border-radius: 0 8px 8px 0;
+            display: none;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+        .show-answer .answer {
+            display: block;
+        }
         .example {
             background-color: #f8f9fa;
             padding: 12px;
             border-radius: 6px;
             margin: 15px 0;
             border: 1px solid #e0e0e0;
-        }
-        .question {
-            font-weight: bold;
-            color: #e74c3c;
-            margin: 12px 0 5px 0;
-        }
-        .answer {
-            color: #27ae60;
-            margin-left: 20px;
-            padding-left: 10px;
-            border-left: 2px solid #2ecc71;
         }
         
         /* 经济问题动画 */
@@ -216,42 +249,10 @@
             from { height: 0%; }
             to { height: 30%; }
         }
-        
-        .math-formula {
-            font-size: 18px;
-            text-align: center;
-            margin: 15px 0;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .static-text {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            text-align: center;
-            font-size: 16px;
-            color: #333;
-        }
-		.solution-container {
-    width: 100px;
-    height: 150px;
-    border: 2px solid #333;
-    position: relative;
-    background-color: #e3f2fd;
-    overflow: hidden;
-}
-
-.solute {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: #0288d1;
-    height: 0;
-}
-
-@keyframes solute-fill {
-    to {
-        height: 30%;
-    }
-}
     </style>
 </head>
 <body>
@@ -279,7 +280,6 @@
                 <div style="font-size: 12px;">成本</div>
                 <div style="font-size: 12px;">利润 60元</div>
             </div>
-       
         </div>
     </div>
     
@@ -294,13 +294,22 @@
     
     <div class="example">
         <div class="question">一个书包的进价是80元，售价是120元，求利润和利润率分别是多少？</div>
-        <div class="answer">40元；50%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">40元；50%</div>
+        </div>
         
         <div class="question">某商品售价240元，利润率是20%，求这件商品的进价是多少？</div>
-        <div class="answer">200元</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">200元</div>
+        </div>
         
         <div class="question">某商店进了一批篮球，每个进价90元，售价150元。后来进价上涨10%，但售价不变，求新的利润率是多少？</div>
-        <div class="answer">约51.52%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">约51.52%</div>
+        </div>
     </div>
     
     <h3>2. 复杂经济问题</h3>
@@ -327,9 +336,6 @@
                 <div style="font-size: 12px;">利润 8元</div>
             </div>
         </div>
-        <div class="static-text">
-            <div class="math-formula"></div>
-        </div>
     </div>
     
     <div class="rule">
@@ -343,13 +349,22 @@
     
     <div class="example">
         <div class="question">一件衣服标价180元，实际卖162元，问打了几折？</div>
-        <div class="answer">9折</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">9折</div>
+        </div>
         
         <div class="question">商店卖出两件商品，每件售价均为80元，其中一件赚25%，另一件亏25%，问总体是盈利还是亏损？金额是多少？</div>
-        <div class="answer">亏损10.67元</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">亏损10.67元</div>
+        </div>
         
         <div class="question">某商品按200元定价可获利25%，如果实际卖240元，求实际利润是多少？</div>
-        <div class="answer">80元</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">80元</div>
+        </div>
     </div>
 </div>
 
@@ -371,8 +386,6 @@
                 <div class="scale-mark">0%</div>
             </div>
         </div>
-        
-        </div>
     </div>
     
     <div class="rule">
@@ -386,37 +399,45 @@
     
     <div class="example">
         <div class="question">将30克盐溶解在120克水中，求盐水的总质量和浓度是多少？</div>
-        <div class="answer">150g，20%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">150g，20%</div>
+        </div>
         
         <div class="question">400克盐水的浓度是15%，求盐的质量是多少？</div>
-        <div class="answer">60g</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">60g</div>
+        </div>
         
         <div class="question">现有300克浓度为12%的盐水，蒸发掉100克水后，求新盐水的浓度是多少？</div>
-        <div class="answer">18%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">18%</div>
+        </div>
     </div>
     
     <h3>2. 浓度变化问题</h3>
     
-<div class="concentration-animation">
-    <div style="display: flex; justify-content: center; width: 100%;">
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <div class="solution-container">
-                <div class="solute" style="animation: solute-fill 1.5s ease-out forwards;"></div>
+    <div class="concentration-animation">
+        <div style="display: flex; justify-content: center; width: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="solution-container">
+                    <div class="solute" style="animation: solute-fill 1.5s ease-out forwards;"></div>
+                </div>
+                <div style="font-size: 12px; margin-top: 10px;">原浓度 20%</div>
             </div>
-            <div style="font-size: 12px; margin-top: 10px;">原浓度 20%</div>
-        </div>
-        <div style="width: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div style="font-size: 20px;">+</div>
-            <div style="font-size: 12px;">25克糖</div>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-            <div class="solution-container">
-                <div class="solute" style="height: 45%; background-color: #0288d1;"></div>
+            <div style="width: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div style="font-size: 20px;">+</div>
+                <div style="font-size: 12px;">25克糖</div>
             </div>
-            <div style="font-size: 12px; margin-top: 10px;">新浓度 36%</div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="solution-container">
+                    <div class="solute" style="height: 45%; background-color: #0288d1;"></div>
+                </div>
+                <div style="font-size: 12px; margin-top: 10px;">新浓度 36%</div>
+            </div>
         </div>
-    </div>
-</div>
     </div>
     
     <div class="rule">
@@ -430,14 +451,35 @@
     
     <div class="example">
         <div class="question">150克糖水中含有30克糖，求糖水的浓度是多少？</div>
-        <div class="answer">20%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">20%</div>
+        </div>
         
         <div class="question">现有200克浓度为15%的糖水，加入300克水后，新糖水的浓度是多少？</div>
-        <div class="answer">6%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">6%</div>
+        </div>
         
         <div class="question">将200克浓度为10%的盐水和300克浓度为20%的盐水混合，求混合后的盐水浓度是多少？</div>
-        <div class="answer">16%</div>
+        <div class="answer-container">
+            <div class="answer-prompt">点击显示答案</div>
+            <div class="answer">16%</div>
+        </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 答案显示功能
+        document.body.addEventListener('click', function(e) {
+            const container = e.target.closest('.answer-container');
+            if(container) {
+                container.classList.toggle('show-answer');
+            }
+        });
+    });
+</script>
 </body>
 </html>
